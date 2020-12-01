@@ -4,28 +4,7 @@
 
         <div id="div-formulario">
 
-            <form [formGroup]="loginForm" action="">
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" formControlName="username" name="username" class="form-control"
-                        placeholder="Introduce usuario"
-                        [class.is-invalid]="loginForm.get('username').touched && loginForm.get('username').invalid">
-                    <div class="alert alert-danger"
-                        [hidden]="loginForm.get('username').pristine || loginForm.get('username').valid">
-                        El campo 'username' no es válido
-                    </div>
-                </div>
-
-                <div id="divLogin" class="divBotones">
-                    <button id="botonLogin" [disabled]="!loginForm.valid" class="btn btn-info"
-                        (click)="login()">Acceder</button>
-                    <!-- <button id="botonAdmin">Admin</button> -->
-                </div>
-            </form>
-
-
-
-            <!-- <form [formGroup]="registerForm" action="">
+            <form [formGroup]="registerForm" action="">
                 <div class="form-group">
                     <label for="username">Username</label>
                     <input type="text" formControlName="username" name="username" class="form-control"
@@ -85,7 +64,7 @@
                     </button>
                 </div>
 
-            </form> -->
+            </form>
 
         </div>
 

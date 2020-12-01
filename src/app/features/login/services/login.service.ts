@@ -22,9 +22,6 @@ export class LoginService {
 
     return this.http.get(endpoint).pipe(
       map((response) => {
-        console.log('---> response login service:');
-        console.log(response);
-
         return response;
       })
     );

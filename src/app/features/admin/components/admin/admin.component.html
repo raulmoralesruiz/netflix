@@ -32,8 +32,13 @@
                     Products
                 </button>
 
-                <button class="btn btn-info" id="botonGetVisuals">Visuals</button>
-                <button class="btn btn-info" id="botonGetSuscriptions">Suscriptions</button>
+                <button class="btn btn-info" id="botonGetVisuals" (click)="getVisuals()">
+                    Visuals
+                </button>
+
+                <button class="btn btn-info" id="botonGetSuscriptions" (click)="getSuscriptions()">
+                    Suscriptions
+                </button>
             </div>
 
 
@@ -211,7 +216,7 @@
 
 
         <div id="divTablaVisuals" class="divTabla">
-            <table id="tablaVisuals" class="tabla oculto">
+            <table id="tablaVisuals" class="tabla">
                 <tr>
                     <th>Visual</th>
                     <th>Start</th>
@@ -219,18 +224,52 @@
                     <th>Product</th>
                     <th>Customer</th>
                 </tr>
+                <tr *ngFor="let v of visuals">
+                    <td>
+                        {{ v.idVisual }}
+                    </td>
+                    <td>
+                        {{ v.inicio }}
+                    </td>
+                    <td>
+                        {{ v.fin }}
+                    </td>
+                    <td>
+                        {{ v.producto.idProduct }}
+                    </td>
+                    <td>
+                        {{ v.idCustomer }}
+                    </td>
+                </tr>
             </table>
         </div>
 
 
         <div id="divTablaSuscriptions" class="divTabla">
-            <table id="tablaSuscriptions" class="tabla oculto">
+            <table id="tablaSuscriptions" class="tabla">
                 <tr>
                     <th>Suscription</th>
                     <th>Start</th>
                     <th>End</th>
                     <th>Content Type</th>
                     <th>Customer</th>
+                </tr>
+                <tr *ngFor="let s of suscriptions">
+                    <td>
+                        {{ s.idSuscription }}
+                    </td>
+                    <td>
+                        {{ s.start }}
+                    </td>
+                    <td>
+                        {{ s.end }}
+                    </td>
+                    <td>
+                        {{ s.typeOfSuscription }}
+                    </td>
+                    <td>
+                        {{ s.idCustomer }}
+                    </td>
                 </tr>
             </table>
         </div>

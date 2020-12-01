@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+
 import { CustomerI } from '../../interfaces/customer';
 import { ProductI } from '../../interfaces/product';
-
 import { SelectI } from '../../interfaces/select';
+import { SuscriptionI } from '../../interfaces/suscription';
+import { VisualI } from '../../interfaces/visual';
 import { AdminService } from '../../services/admin.service';
 
 @Component({
@@ -18,8 +20,8 @@ export class AdminComponent implements OnInit {
 
   customers: CustomerI[];
   products: ProductI[];
-  visuals: ProductI[];
-  suscriptions: ProductI[];
+  visuals: VisualI[];
+  suscriptions: SuscriptionI[];
 
   constructor(private adminService: AdminService) {}
 
@@ -56,8 +58,6 @@ export class AdminComponent implements OnInit {
     this.adminService.getCustomers().subscribe(
       (res) => {
         this.customers = res;
-
-        console.log(res);
       },
       (error) => {
         console.log(error);
@@ -69,6 +69,28 @@ export class AdminComponent implements OnInit {
     this.adminService.getProducts().subscribe(
       (res) => {
         this.products = res;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  getVisuals(): void {
+    this.adminService.getVisuals().subscribe(
+      (res) => {
+        this.visuals = res;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  getSuscriptions(): void {
+    this.adminService.getSuscriptions().subscribe(
+      (res) => {
+        this.suscriptions = res;
       },
       (error) => {
         console.log(error);
