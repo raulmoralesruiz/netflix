@@ -1,0 +1,243 @@
+<div class="cuerpo">
+    <div id="div-formulario">
+
+        <!-- 
+            title: new FormControl('', Validators.required),
+            category: new FormControl('', Validators.required),
+            contentType: new FormControl('', Validators.required),
+            suscriptionType: new FormControl('', Validators.required),
+        -->
+
+
+        <div class="alert alert-success oculto" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="alert-heading">Producto creado!</h4>
+            <p>Puedes cerrar este mensaje pulsado "x" en la esquina superior a la derecha.</p>
+        </div>
+
+
+
+        <form [formGroup]="productForm" action="">
+
+            <h1>GET</h1>
+
+            <div id="divGet" class="divBotones">
+                <button class="btn btn-info" id="botonGetCustomers" (click)="getCustomers()">
+                    Customers
+                </button>
+
+                <button class="btn btn-info" id="botonGetProducts" (click)="getProducts()">
+                    Products
+                </button>
+
+                <button class="btn btn-info" id="botonGetVisuals">Visuals</button>
+                <button class="btn btn-info" id="botonGetSuscriptions">Suscriptions</button>
+            </div>
+
+
+
+            <div id="divPostProduct" class="divBotones">
+                <h1>POST - Product</h1>
+
+                <!-- TITULO DEL PRODUCTO -->
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" formControlName="title" name="title" class="form-control"
+                        placeholder="Introduce título"
+                        [class.is-invalid]="productForm.get('title').touched && productForm.get('title').invalid">
+                    <div class="alert alert-danger"
+                        [hidden]="productForm.get('title').pristine || productForm.get('title').valid">
+                        El campo 'title' no es válido
+                    </div>
+                </div>
+
+
+
+                <!-- CATEGORIA DEL PRODUCTO -->
+                <div class="form-group">
+                    <label for="selectCategory">Category</label>
+                    <select class="form-control" id="selectCategory" formControlName="categoria"
+                        [class.is-invalid]="productForm.get('categoria').invalid">
+                        <option disabled selected value>Select an option</option>
+                        <option *ngFor="let cat of categories" value="{{cat.value}}">
+                            {{ cat.name }}
+                        </option>
+                    </select>
+                    <div class="alert alert-danger"
+                        [hidden]="productForm.get('categoria').pristine || productForm.get('categoria').valid">
+                        El campo 'category' no es válido
+                    </div>
+                </div>
+                <!-- {{ categories | json }} -->
+
+
+
+                <!-- TIPO DE CONTENIDO DEL PRODUCTO -->
+                <div class="form-group">
+                    <label for="selectContentType">Content type</label>
+                    <select class="form-control" id="selectContentType" formControlName="tipoContenido"
+                        [class.is-invalid]="productForm.get('tipoContenido').invalid">
+                        <option disabled selected value>Select an option</option>
+                        <option *ngFor="let ct of contentTypes" value="{{ct.value}}">
+                            {{ ct.name }}
+                        </option>
+                    </select>
+                    <div class="alert alert-danger"
+                        [hidden]="productForm.get('tipoContenido').pristine || productForm.get('tipoContenido').valid">
+                        El campo 'contentType' no es válido
+                    </div>
+                </div>
+                <!-- {{ contentTypes | json }} -->
+
+
+
+                <!-- TIPO DE SUSCRIPCION DEL PRODUCTO -->
+                <div class="form-group">
+                    <label for="selectSuscriptionType">Suscription type</label>
+                    <select class="form-control" id="selectSuscriptionType" formControlName="tipoSuscripcion"
+                        [class.is-invalid]="productForm.get('tipoSuscripcion').invalid">
+                        <option disabled selected value>Select an option</option>
+                        <option *ngFor="let st of suscriptionTypes" value="{{st.value}}">
+                            {{ st.name }}
+                        </option>
+                    </select>
+                    <div class="alert alert-danger"
+                        [hidden]="productForm.get('tipoSuscripcion').pristine || productForm.get('tipoSuscripcion').valid">
+                        El campo 'suscriptionType' no es válido
+                    </div>
+                </div>
+                <!-- {{ suscriptionTypes | json }} -->
+
+
+                <button id="botonPostProduct" class="btn btn-info margenBoton" [disabled]="!productForm.valid"
+                    (click)="sendData()">
+                    Create product
+                </button>
+
+            </div>
+
+        </form>
+
+
+
+
+        <!-- <button type="button" class="close">
+            <span aria-hidden="true">&times;</span>
+        </button> -->
+
+        <div id="divTablaListado" class="divTabla">
+            <table id="tablaListado" class="tabla oculto">
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Tipe content</th>
+                    <th>Tipe suscription</th>
+                </tr>
+            </table>
+        </div>
+
+
+        <div id="divTablaCustomers" class="divTabla">
+            <table id="tablaCustomers" class="tabla">
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Address</th>
+                    <th>City</th>
+                    <th>DNI</th>
+                </tr>
+                <tr *ngFor="let c of customers">
+                    <td>
+                        {{ c.id }}
+                    </td>
+                    <td>
+                        {{ c.username }}
+                    </td>
+                    <td>
+                        {{ c.name }}
+                    </td>
+                    <td>
+                        {{ c.surname }}
+                    </td>
+                    <td>
+                        {{ c.address }}
+                    </td>
+                    <td>
+                        {{ c.city }}
+                    </td>
+                    <td>
+                        {{ c.dni }}
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+
+
+
+        <div id="divTablaProducts" class="divTabla">
+            <table id="tablaProducts" class="tabla">
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Tipe content</th>
+                    <th>Tipe suscription</th>
+                </tr>
+                <tr *ngFor="let p of products">
+                    <td>
+                        {{ p.idProduct }}
+                    </td>
+                    <td>
+                        {{ p.title }}
+                    </td>
+                    <td>
+                        {{ p.categoria }}
+                    </td>
+                    <td>
+                        {{ p.tipoContenido }}
+                    </td>
+                    <td>
+                        {{ p.tipoSuscripcion }}
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+
+        <div id="divTablaVisuals" class="divTabla">
+            <table id="tablaVisuals" class="tabla oculto">
+                <tr>
+                    <th>Visual</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Product</th>
+                    <th>Customer</th>
+                </tr>
+            </table>
+        </div>
+
+
+        <div id="divTablaSuscriptions" class="divTabla">
+            <table id="tablaSuscriptions" class="tabla oculto">
+                <tr>
+                    <th>Suscription</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Content Type</th>
+                    <th>Customer</th>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- Tener en cuenta -->
+<!-- (change)="onSelect($event.target.value)" -->

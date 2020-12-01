@@ -1,0 +1,95 @@
+<div class="cuerpo">
+
+    <div class="container">
+
+        <div id="div-formulario">
+
+            <form [formGroup]="loginForm" action="">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" formControlName="username" name="username" class="form-control"
+                        placeholder="Introduce usuario"
+                        [class.is-invalid]="loginForm.get('username').touched && loginForm.get('username').invalid">
+                    <div class="alert alert-danger"
+                        [hidden]="loginForm.get('username').pristine || loginForm.get('username').valid">
+                        El campo 'username' no es válido
+                    </div>
+                </div>
+
+                <div id="divLogin" class="divBotones">
+                    <button id="botonLogin" [disabled]="!loginForm.valid" class="btn btn-info"
+                        (click)="login()">Acceder</button>
+                    <!-- <button id="botonAdmin">Admin</button> -->
+                </div>
+            </form>
+
+
+
+            <form [formGroup]="registerForm" action="">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" formControlName="username" name="username" class="form-control"
+                        placeholder="Introduce usuario"
+                        [class.is-invalid]="registerForm.get('username').touched && registerForm.get('username').invalid">
+                    <div class="alert alert-danger"
+                        [hidden]="registerForm.get('username').pristine || registerForm.get('username').valid">
+                        El campo 'username' no es válido
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" formControlName="name" name="name" class="form-control"
+                        placeholder="Introduce nombre"
+                        [class.is-invalid]="registerForm.get('name').touched && registerForm.get('name').invalid">
+                    <div class="alert alert-danger"
+                        [hidden]="registerForm.get('name').pristine || registerForm.get('name').valid">
+                        El campo 'name' no es válido
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="surname">Surname</label>
+                    <input type="text" formControlName="surname" name="surname" class="form-control"
+                        placeholder="Introduce apellido">
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <input type="text" formControlName="address" name="address" class="form-control"
+                        placeholder="Introduce dirección">
+                </div>
+
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <input type="text" formControlName="city" name="city" class="form-control"
+                        placeholder="Introduce ciudad">
+                </div>
+
+
+                <div class="form-group">
+                    <label for="dni">DNI</label>
+                    <input type="text" formControlName="dni" name="dni" class="form-control" placeholder="Introduce DNI"
+                        [class.is-invalid]="registerForm.get('dni').touched && registerForm.get('dni').invalid">
+                    <div class="alert alert-danger"
+                        [hidden]="registerForm.get('dni').pristine || registerForm.get('dni').valid">
+                        El campo 'dni' no es válido
+                    </div>
+                </div>
+
+
+                <div id="divRegistro" class="divBotones">
+                    <button id="botonRegistro" [disabled]="!registerForm.valid" class="btn btn-info"
+                        (click)="createCustomer()">
+                        Registrarse
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+</div>
