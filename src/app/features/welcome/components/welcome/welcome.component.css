@@ -1,0 +1,18 @@
+.cuerpo {
+    font-size: 15px;
+    color: aliceblue;
+    background-color: darkslategray;
+    height: 100vh;
+    /* height: 100%; */
+}
+
+.container {
+    padding-top: 5%;
+    padding-bottom: 5%;
+    text-align: center;
+}
+
+img {
+    margin: 0 auto;
+    max-width: 80%;
+}

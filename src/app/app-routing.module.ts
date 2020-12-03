@@ -4,11 +4,16 @@ import { AdminComponent } from './features/admin/components/admin/admin.componen
 import { HomeComponent } from './features/home/components/home/home.component';
 import { LoginComponent } from './features/login/components/login/login.component';
 import { SignupComponent } from './features/login/components/signup/signup.component';
+import { WelcomeComponent } from './features/welcome/components/welcome/welcome.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: LoginComponent,
+    component: WelcomeComponent,
+  },
+  {
+    path: 'welcome',
+    component: WelcomeComponent,
   },
   {
     path: 'login',

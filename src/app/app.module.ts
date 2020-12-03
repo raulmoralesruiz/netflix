@@ -10,9 +10,10 @@ import { HomeComponent } from './features/home/components/home/home.component';
 import { AdminComponent } from './features/admin/components/admin/admin.component';
 import { MenuComponent } from './features/menu/components/menu/menu.component';
 import { SignupComponent } from './features/login/components/signup/signup.component';
+import { WelcomeComponent } from './features/welcome/components/welcome/welcome.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, HomeComponent, AdminComponent, MenuComponent, SignupComponent],
+  declarations: [AppComponent, LoginComponent, HomeComponent, AdminComponent, MenuComponent, SignupComponent, WelcomeComponent],
   imports: [
     BrowserModule,
     HttpClientModule,

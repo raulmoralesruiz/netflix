@@ -10,6 +10,7 @@ import { LoginService } from '../../services/login.service';
 })
 export class LoginComponent implements OnInit {
   registeredUsers: any[];
+  getUsersError: string;
 
   constructor(private loginService: LoginService, private router: Router) {}
 
@@ -27,12 +28,18 @@ export class LoginComponent implements OnInit {
   }); */
 
   ngOnInit(): void {
+    this.saveRegisteredUsers();
+  }
+
+  saveRegisteredUsers(): void {
     this.loginService.saveRegisteredUsers().subscribe(
       (res) => {
         this.registeredUsers = res;
       },
       (error) => {
         console.log(error);
+        this.getUsersError = error.name;
+        console.log(this.getUsersError);
       }
     );
   }
@@ -41,20 +48,24 @@ export class LoginComponent implements OnInit {
     /* console.log('boton login ok');
     console.log(this.loginForm.value.username); */
 
-    let username = this.loginForm.value.username;
-    let encontrado = false;
+    if (this.getUsersError == 'HttpErrorResponse') {
+      alert('ERROR. El servidor no responde');
+    } else {
+      let username = this.loginForm.value.username;
+      let encontrado = false;
 
-    for (let i = 0; i < this.registeredUsers.length && !encontrado; i++) {
-      let usuario = this.registeredUsers[i];
-      if (usuario == username) {
-        encontrado = true;
-        /* console.log(`Acceso correcto, usuario: ${usuario}`); */
-        sessionStorage.setItem('activeUser', usuario);
-        this.router.navigate(['home']);
+      for (let i = 0; i < this.registeredUsers.length && !encontrado; i++) {
+        let usuario = this.registeredUsers[i];
+        if (usuario == username) {
+          encontrado = true;
+          /* console.log(`Acceso correcto, usuario: ${usuario}`); */
+          sessionStorage.setItem('activeUser', usuario);
+          this.router.navigate(['home']);
+        }
       }
-    }
-    if (!encontrado) {
-      alert(`Acceso denegado`);
+      if (!encontrado) {
+        alert(`Acceso denegado`);
+      }
     }
   }
 

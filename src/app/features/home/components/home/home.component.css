@@ -1,0 +1,61 @@
+.cuerpo {
+    font-size: 15px;
+    color: aliceblue;
+    background-color: darkslategray;
+    height: 100vh;
+    /* height: 100%; */
+}
+
+.centrado {
+    text-align: center;
+}
+
+.container {
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
+
+.oculto {
+    display: none;
+}
+
+
+/* ----------------------- TABLA ---------------------- */
+
+/* label {
+    display: block;
+    float: left;
+    padding: 2px 5px 2px 5px;
+    font-size: 20px;
+    margin-top: 15px;
+} */
+
+label {
+  float: left;
+}
+
+
+
+.divTabla {
+  /* margin-top: 50px; */
+  width: 100%;
+}
+
+.tabla {
+  width: 100%;
+  /* margin: 0 auto; */
+  text-align: center;
+}
+
+th {
+  background-color: rgb(44, 102, 102);
+  border-radius: 5px;
+}
+
+td {
+  background-color: rgb(28, 128, 128);
+  border-radius: 2px;
+  padding: 10px;
+}
+
+/* ----------------------- TABLA ---------------------- */

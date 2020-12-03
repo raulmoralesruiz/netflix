@@ -1,1 +1,32 @@
-<p>home works!</p>
+<div class="cuerpo">
+
+    <div class="container centrado">
+        <h1>Welcome {{ activeUser }}</h1>
+    </div>
+
+    <p>active suscription: {{ activeSuscription }}</p>
+
+    <div class="container">
+        <div *ngIf="activeSuscription" id="divTablaProductos" class="form-group divTabla">
+            <label for="tablaProductos">Productos disponibles:</label>
+            <table id="tablaProductos" class="tabla">
+                <tr>
+                    <th>Product</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Tipe content</th>
+                    <th>Tipe suscription</th>
+                </tr>
+                <tr *ngFor="let p of productsAvailable">
+                    <td>{{ p.idProduct }}</td>
+                    <td>{{ p.title }}</td>
+                    <td>{{ p.categoria }}</td>
+                    <td>{{ p.tipoContenido }}</td>
+                    <td>{{ p.tipoSuscripcion }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+
+</div>
