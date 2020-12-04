@@ -1,5 +1,16 @@
 <div class="cuerpo">
-    <div id="div-formulario">
+
+    <div *ngIf="!activeUserIsAdmin()" class="container notAdmin centrado">
+        <h1 class="pb-5">Sorry</h1>
+
+        <h3>You do not have access as administrator</h3>
+        <h3 class="pb-5">If you are an administrator, you can log in from here</h3>
+
+        <button class="btn btn-info" [routerLink]="['/login']">Go to Login</button>
+    </div>
+
+
+    <div *ngIf="activeUserIsAdmin()" id="div-formulario">
 
         <!-- 
             title: new FormControl('', Validators.required),
@@ -20,28 +31,6 @@
 
 
         <form [formGroup]="productForm" action="">
-
-            <h1>GET</h1>
-
-            <div id="divGet" class="divBotones">
-                <button class="btn btn-info" id="botonGetCustomers" (click)="getCustomers()">
-                    Customers
-                </button>
-
-                <button class="btn btn-info" id="botonGetProducts" (click)="getProducts()">
-                    Products
-                </button>
-
-                <button class="btn btn-info" id="botonGetVisuals" (click)="getVisuals()">
-                    Visuals
-                </button>
-
-                <button class="btn btn-info" id="botonGetSuscriptions" (click)="getSuscriptions()">
-                    Suscriptions
-                </button>
-            </div>
-
-
 
             <div id="divPostProduct" class="divBotones">
                 <h1>POST - Product</h1>
@@ -123,6 +112,32 @@
 
             </div>
 
+
+            <h1>GET</h1>
+
+            <div id="divGet" class="divBotones">
+                <button class="btn btn-info" id="botonGetCustomers" (click)="getCustomers()">
+                    Customers
+                </button>
+
+                <button class="btn btn-info" id="botonGetProducts" (click)="getProducts()">
+                    Products
+                </button>
+
+                <button class="btn btn-info" id="botonGetVisuals" (click)="getVisuals()">
+                    Visuals
+                </button>
+
+                <button class="btn btn-info" id="botonGetSuscriptions" (click)="getSuscriptions()">
+                    Suscriptions
+                </button>
+
+                <!-- <button type="button" class="close" (click)="closeTable()">
+                    <span aria-hidden="true">&times;</span>
+                </button> -->
+            </div>
+
+
         </form>
 
 
@@ -145,7 +160,10 @@
         </div>
 
 
-        <div id="divTablaCustomers" class="divTabla">
+
+
+        <div *ngIf="activeTable == 'customers'" id="divTablaCustomers" class="divTabla">
+
             <table id="tablaCustomers" class="tabla">
                 <tr>
                     <th>ID</th>
@@ -181,11 +199,18 @@
                 </tr>
 
             </table>
+
+            <div class="divBotones">
+                <button class="btn btn-info" (click)="closeTable()">
+                    Close view
+                </button>
+            </div>
+
         </div>
 
 
 
-        <div id="divTablaProducts" class="divTabla">
+        <div *ngIf="activeTable == 'products'" id="divTablaProducts" class="divTabla">
             <table id="tablaProducts" class="tabla">
                 <tr>
                     <th>ID</th>
@@ -212,10 +237,17 @@
                     </td>
                 </tr>
             </table>
+
+            <div class="divBotones">
+                <button class="btn btn-info" (click)="closeTable()">
+                    Close view
+                </button>
+            </div>
+
         </div>
 
 
-        <div id="divTablaVisuals" class="divTabla">
+        <div *ngIf="activeTable == 'visuals'" id="divTablaVisuals" class="divTabla">
             <table id="tablaVisuals" class="tabla">
                 <tr>
                     <th>Visual</th>
@@ -242,10 +274,17 @@
                     </td>
                 </tr>
             </table>
+
+            <div class="divBotones">
+                <button class="btn btn-info" (click)="closeTable()">
+                    Close view
+                </button>
+            </div>
+
         </div>
 
 
-        <div id="divTablaSuscriptions" class="divTabla">
+        <div *ngIf="activeTable == 'suscriptions'" id="divTablaSuscriptions" class="divTabla">
             <table id="tablaSuscriptions" class="tabla">
                 <tr>
                     <th>Suscription</th>
@@ -272,7 +311,14 @@
                     </td>
                 </tr>
             </table>
+
+            <div class="divBotones">
+                <button class="btn btn-info" (click)="closeTable()">
+                    Close view
+                </button>
+            </div>
         </div>
+
 
     </div>
 </div>

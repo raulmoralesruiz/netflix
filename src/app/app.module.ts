@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,7 +14,15 @@ import { SignupComponent } from './features/login/components/signup/signup.compo
 import { WelcomeComponent } from './features/welcome/components/welcome/welcome.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, HomeComponent, AdminComponent, MenuComponent, SignupComponent, WelcomeComponent],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    HomeComponent,
+    AdminComponent,
+    MenuComponent,
+    SignupComponent,
+    WelcomeComponent,
+  ],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -21,7 +30,7 @@ import { WelcomeComponent } from './features/welcome/components/welcome/welcome.
     FormsModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

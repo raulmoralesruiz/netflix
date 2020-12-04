@@ -1,7 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { SelectI } from 'src/app/interfaces/select';
+
+import { SuscriptionI } from 'src/app/interfaces/suscription';
 
 @Injectable({
   providedIn: 'root',
@@ -11,9 +14,27 @@ export class HomeService {
     console.log('servicio login funcionando');
   }
 
-  // httpOptions = {
-  //   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-  // };
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  };
+
+  // Se definen los tipos de suscripciones
+  private suscriptionType: SelectI[] = [
+    {
+      id: 1,
+      value: 'BASIC',
+      name: 'Basic',
+    },
+    {
+      id: 2,
+      value: 'PREMIUM',
+      name: 'Premium',
+    },
+  ];
+
+  getSuscriptionType(): SelectI[] {
+    return this.suscriptionType;
+  }
 
   getIdActiveUserData(): Observable<any> {
     const endpoint = 'http://localhost:8080/netflix/customer';
@@ -42,6 +63,19 @@ export class HomeService {
       map((response) => {
         return response;
       })
+    );
+  }
+
+  createSubscription(
+    idCustomer: number,
+    subscription: SuscriptionI
+  ): Observable<any> {
+    const endpoint = `http://localhost:8080/netflix/suscription/c${idCustomer}`;
+
+    return this.http.post<SuscriptionI>(
+      endpoint,
+      subscription,
+      this.httpOptions
     );
   }
 }

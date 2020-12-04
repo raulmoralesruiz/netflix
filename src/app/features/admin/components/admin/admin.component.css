@@ -7,6 +7,13 @@
     padding-bottom: 5%;
 }
 
+.notAdmin {
+    height: 100vh;
+}
+
+.centrado {
+    text-align: center;
+}
 
 .oculto {
     display: none;

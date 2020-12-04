@@ -59,8 +59,15 @@ export class LoginComponent implements OnInit {
         if (usuario == username) {
           encontrado = true;
           /* console.log(`Acceso correcto, usuario: ${usuario}`); */
+
+          // Se guarda el usuario activo en session storage.
           sessionStorage.setItem('activeUser', usuario);
+
+          // Se envía la ruta hacía el componente home.
           this.router.navigate(['home']);
+
+          // Se refresca la página (para mostrar u ocultar botón admin en el menú)
+          window.location.reload();
         }
       }
       if (!encontrado) {

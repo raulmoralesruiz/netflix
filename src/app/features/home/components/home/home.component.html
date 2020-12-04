@@ -1,13 +1,50 @@
 <div class="cuerpo">
 
-    <div class="container centrado">
-        <h1>Welcome {{ activeUser }}</h1>
+    <div *ngIf="!activeUser" class="container centrado">
+        <h1 class="pb-5">Welcome to Netflix</h1>
+
+        <h3>You have not accessed the system yet</h3>
+        <h3 class="pb-5">You can log in or register</h3>
+
+        <button class="btn btn-info" [routerLink]="['/login']">Go to Login</button>
+        <button class="btn ml-5 btn-info" [routerLink]="['/signup']">Go to Register</button>
     </div>
 
-    <p>active suscription: {{ activeSuscription }}</p>
 
-    <div class="container">
-        <div *ngIf="activeSuscription" id="divTablaProductos" class="form-group divTabla">
+    <div *ngIf="activeUser" class="container centrado">
+        <h1>Welcome {{ activeUser }}</h1>
+
+        <!-- borrar -->
+        <p>active suscription: {{ activeSuscription }}</p>
+    </div>
+
+
+
+    <form [formGroup]="subscriptionForm" action="">
+
+        <div *ngIf="!activeSuscription" class="container">
+            <div class="form-group">
+                <label for="selectSubscription">Choose a subscription type:</label>
+                <select class="form-control" id="selectSubscription" formControlName="tipoSuscripcion"
+                    (change)="showInfo()">
+                    <option disabled selected value>Select an option</option>
+                    <option *ngFor="let st of suscriptionTypes" value="{{st.value}}">
+                        {{ st.name }}
+                    </option>
+                </select>
+            </div>
+
+            <button class="btn btn-info" [disabled]="!subscriptionForm.valid" (click)="activateSubscription()">
+                Activate Subscription
+            </button>
+        </div>
+
+    </form>
+
+
+
+    <div *ngIf="activeSuscription" class="container">
+        <div id="divTablaProductos" class="form-group divTabla">
             <label for="tablaProductos">Productos disponibles:</label>
             <table id="tablaProductos" class="tabla">
                 <tr>

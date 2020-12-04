@@ -61,7 +61,7 @@ export class AdminService {
     },
   ];
 
-  // Se definnene los tipos de suscripciones
+  // Se definen los tipos de suscripciones
   private suscriptionType: SelectI[] = [
     {
       id: 1,

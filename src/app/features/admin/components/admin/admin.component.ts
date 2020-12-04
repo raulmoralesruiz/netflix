@@ -14,6 +14,9 @@ import { AdminService } from '../../services/admin.service';
   styleUrls: ['./admin.component.css'],
 })
 export class AdminComponent implements OnInit {
+  activeUser = sessionStorage.getItem('activeUser');
+  activeTable: string;
+
   categories: SelectI[];
   contentTypes: SelectI[];
   suscriptionTypes: SelectI[];
@@ -51,6 +54,7 @@ export class AdminComponent implements OnInit {
     this.adminService.createProduct(formData).subscribe((producto) => {
       alert('Producto creado!');
       console.log(producto);
+      this.productForm.reset();
     });
   }
 
@@ -58,6 +62,7 @@ export class AdminComponent implements OnInit {
     this.adminService.getCustomers().subscribe(
       (res) => {
         this.customers = res;
+        this.activeTable = 'customers';
       },
       (error) => {
         console.log(error);
@@ -69,6 +74,7 @@ export class AdminComponent implements OnInit {
     this.adminService.getProducts().subscribe(
       (res) => {
         this.products = res;
+        this.activeTable = 'products';
       },
       (error) => {
         console.log(error);
@@ -80,6 +86,7 @@ export class AdminComponent implements OnInit {
     this.adminService.getVisuals().subscribe(
       (res) => {
         this.visuals = res;
+        this.activeTable = 'visuals';
       },
       (error) => {
         console.log(error);
@@ -91,10 +98,23 @@ export class AdminComponent implements OnInit {
     this.adminService.getSuscriptions().subscribe(
       (res) => {
         this.suscriptions = res;
+        this.activeTable = 'suscriptions';
       },
       (error) => {
         console.log(error);
       }
     );
+  }
+
+  closeTable(): void {
+    this.activeTable = '';
+  }
+
+  activeUserIsAdmin(): boolean {
+    if (this.activeUser == 'admin') {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
