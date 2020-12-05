@@ -22,7 +22,7 @@
 
     <form [formGroup]="subscriptionForm" action="">
 
-        <div *ngIf="!activeSuscription" class="container">
+        <div *ngIf="activeUser && !activeSuscription" class="container">
             <div class="form-group">
                 <label for="selectSubscription">Choose a subscription type:</label>
                 <select class="form-control" id="selectSubscription" formControlName="tipoSuscripcion"
@@ -48,22 +48,77 @@
             <label for="tablaProductos">Productos disponibles:</label>
             <table id="tablaProductos" class="tabla">
                 <tr>
-                    <th>Product</th>
+                    <!-- <th>Product</th> -->
                     <th>Title</th>
                     <th>Category</th>
                     <th>Tipe content</th>
-                    <th>Tipe suscription</th>
+                    <th>Watch</th>
                 </tr>
                 <tr *ngFor="let p of productsAvailable">
-                    <td>{{ p.idProduct }}</td>
+                    <!-- <td>{{ p.idProduct }}</td> -->
                     <td>{{ p.title }}</td>
                     <td>{{ p.categoria }}</td>
                     <td>{{ p.tipoContenido }}</td>
-                    <td>{{ p.tipoSuscripcion }}</td>
+                    <td>
+                        <!-- <button class="btn btn-info" (click)="setIdProduct( p.idProduct )"> -->
+                        <button class="btn btn-info" (click)="addVisual( p.idProduct )">
+                            Go
+                        </button>
+                    </td>
                 </tr>
             </table>
         </div>
     </div>
+
+    <div *ngIf="activeUser && activeSuscription" class="container">
+        <button *ngIf="!visualsActivated" class="btn btn-info objCentrado" (click)="showVisuals(); setVisualsOn()">
+            Show visuals
+        </button>
+        <button *ngIf="visualsActivated" class="btn btn-info objCentrado" (click)="setVisualsOff()">
+            Close visuals
+        </button>
+    </div>
+
+    <div *ngIf="visualsActivated" class="container">
+
+        <div id="divTablaVisuals" class="form-group divTabla">
+            <label for="tablaVisuals">Historial de visualizaciones:</label>
+            <table id="tablaVisuals" class="tabla">
+                <tr>
+                    <!-- <th>Visual</th> -->
+                    <th>Product</th>
+                    <th>Start</th>
+                    <th>End</th>
+                </tr>
+                <tr *ngFor="let v of customerVisuals">
+                    <!-- <td>{{ v.idVisual }}</td> -->
+                    <td>{{ v.producto.title }}</td>
+                    <td>{{ v.inicio }}</td>
+                    <td>{{ v.fin }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- <div id="divTablaVisuals" class="form-group divTabla">
+        <label for="tablaVisuals">Historial de visualizaciones:</label>
+        <table id="tablaVisuals" class="tabla">
+            <tr>
+                <th>Visual</th>
+                <th>Product</th>
+                <th>Start</th>
+                <th>End</th>
+            </tr>
+            <tr *ngFor="let v of customerVisuals">
+                <td>{{ v.idVisual }}</td>
+                <td>{{ v.producto.title }}</td>
+                <td>{{ v.inicio }}</td>
+                <td>{{ v.fin }}</td>
+            </tr>
+        </table>
+    </div> -->
+
+
 
 
 </div>

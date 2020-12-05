@@ -1,29 +1,39 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { SelectI } from 'src/app/interfaces/select';
-import { SuscriptionI } from 'src/app/interfaces/suscription';
 
 import { CustomerI } from '../../interfaces/customer';
 import { ProductI } from '../../interfaces/product';
 import { HomeService } from '../../services/home.service';
+import { SelectI } from 'src/app/interfaces/select';
+import { SuscriptionI } from 'src/app/interfaces/suscription';
+import { VisualI } from 'src/app/interfaces/visual';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, AfterViewInit {
   activeUser: string;
   customer: CustomerI;
   activeSuscription: boolean;
   productsAvailable: ProductI[];
-  newSuscription: SuscriptionI;
   suscriptionTypes: SelectI[];
-  // activeSuscriptionType: string;
+  customerVisuals: VisualI[];
+  visualsActivated: boolean;
   todayDate: string;
 
-  constructor(private homeService: HomeService, private dtPipe: DatePipe) {}
+  constructor(
+    private homeService: HomeService,
+    private elementRef: ElementRef,
+    private dtPipe: DatePipe
+  ) {}
+
+  ngAfterViewInit(): void {
+    this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor =
+      '#2f4f4f';
+  }
 
   subscriptionForm = new FormGroup({
     tipoSuscripcion: new FormControl('', Validators.required),
@@ -110,7 +120,7 @@ export class HomeComponent implements OnInit {
   activateSubscription(): void {
     console.log(this.customer);
 
-    this.newSuscription = {
+    let suscription: SuscriptionI = {
       start: '2020-01-01T01:00:00',
       end: '2021-01-01T01:00:00',
       typeOfSuscription: this.subscriptionForm.value.tipoSuscripcion,
@@ -118,7 +128,7 @@ export class HomeComponent implements OnInit {
     };
 
     this.homeService
-      .createSubscription(this.customer.id, this.newSuscription)
+      .createSubscription(this.customer.id, suscription)
       .subscribe(
         (sub) => {
           alert('subscripción creada!');
@@ -128,6 +138,47 @@ export class HomeComponent implements OnInit {
           console.log(error);
         }
       );
+  }
+
+  addVisual(idProduct: number): void {
+    console.log(this.customer);
+
+    let visual: VisualI = {
+      inicio: ' 2020-01-01T01:00:00',
+      fin: '2021-01-01T01:00:00',
+    };
+
+    this.homeService
+      .createVisual(this.customer.id, idProduct, visual)
+      .subscribe(
+        (visual) => {
+          alert('visualización creada!');
+          console.log(visual);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+  }
+
+  showVisuals(): void {
+    this.homeService.getVisuals(this.customer.id).subscribe(
+      (res) => {
+        console.log(res);
+        this.customerVisuals = res;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  setVisualsOn(): void {
+    this.visualsActivated = true;
+  }
+
+  setVisualsOff(): void {
+    this.visualsActivated = false;
   }
 
   // EXTRA...

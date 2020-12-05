@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { SelectI } from 'src/app/interfaces/select';
 
 import { SuscriptionI } from 'src/app/interfaces/suscription';
+import { VisualI } from 'src/app/interfaces/visual';
 
 @Injectable({
   providedIn: 'root',
@@ -76,6 +77,26 @@ export class HomeService {
       endpoint,
       subscription,
       this.httpOptions
+    );
+  }
+
+  createVisual(
+    idCustomer: number,
+    idProduct: number,
+    visual: VisualI
+  ): Observable<any> {
+    const endpoint = `http://localhost:8080/netflix/visual/c${idCustomer}/p${idProduct}`;
+
+    return this.http.post<SuscriptionI>(endpoint, visual, this.httpOptions);
+  }
+
+  getVisuals(idCustomer: number): Observable<any> {
+    const endpoint = `http://localhost:8080/netflix/visual/c${idCustomer}`;
+
+    return this.http.get(endpoint).pipe(
+      map((response) => {
+        return response;
+      })
     );
   }
 }
