@@ -1,15 +1,15 @@
 import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-welcome',
-  templateUrl: './welcome.component.html',
-  styleUrls: ['./welcome.component.css'],
+  selector: 'app-footer',
+  templateUrl: './footer.component.html',
+  styleUrls: ['./footer.component.css'],
 })
-export class WelcomeComponent implements OnInit, AfterViewInit {
+export class FooterComponent implements OnInit, AfterViewInit {
   constructor(private elementRef: ElementRef) {}
   ngAfterViewInit(): void {
     this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor =
-      '#2f4f4f';
+      '#233b3b';
   }
 
   ngOnInit(): void {}

@@ -1,40 +1,45 @@
 <div class="cuerpo">
 
-    <div *ngIf="!activeUser" class="container centrado">
+    <div *ngIf="!activeUser" class="container mt-4 centrado">
         <h1 class="pb-5">Welcome to Netflix</h1>
 
-        <h3>You have not accessed the system yet</h3>
+        <h3 class="mt-5">You have not accessed the system yet</h3>
         <h3 class="pb-5">You can log in or register</h3>
 
-        <button class="btn btn-info" [routerLink]="['/login']">Go to Login</button>
-        <button class="btn ml-5 btn-info" [routerLink]="['/signup']">Go to Register</button>
+        <button class="btn mt-5 btn-info" [routerLink]="['/login']">Go to Login</button>
+        <button class="btn mt-5 ml-5 btn-info" [routerLink]="['/signup']">Go to Register</button>
     </div>
 
 
-    <div *ngIf="activeUser" class="container centrado">
+    <div *ngIf="activeUser" class="container mt-4 centrado">
         <h1>Welcome {{ activeUser }}</h1>
+    </div>
 
-        <!-- borrar -->
-        <p>active suscription: {{ activeSuscription }}</p>
+
+    <div *ngIf="activeUser == 'admin'" class="container mt-4 centrado">
+        <button class="btn btn-info mt-5 mb-5 btn-lg btn-block" [routerLink]="'/admin'">
+            Admin site
+        </button>
     </div>
 
 
 
     <form [formGroup]="subscriptionForm" action="">
 
-        <div *ngIf="activeUser && !activeSuscription" class="container">
+        <div *ngIf="activeUser && !activeSubscription" class="container mt-5">
             <div class="form-group">
                 <label for="selectSubscription">Choose a subscription type:</label>
-                <select class="form-control" id="selectSubscription" formControlName="tipoSuscripcion"
+                <select class="form-control" id="selectSubscription" formControlName="subscriptionType"
                     (change)="showInfo()">
                     <option disabled selected value>Select an option</option>
-                    <option *ngFor="let st of suscriptionTypes" value="{{st.value}}">
+                    <option *ngFor="let st of subscriptionTypes" value="{{st.value}}">
                         {{ st.name }}
                     </option>
                 </select>
             </div>
 
-            <button class="btn btn-info" [disabled]="!subscriptionForm.valid" (click)="activateSubscription()">
+            <button class="btn btn-info mt-5 mb-5 btn-block" [disabled]="!subscriptionForm.valid"
+                (click)="activateSubscription()">
                 Activate Subscription
             </button>
         </div>
@@ -43,82 +48,52 @@
 
 
 
-    <div *ngIf="activeSuscription" class="container">
-        <div id="divTablaProductos" class="form-group divTabla">
-            <label for="tablaProductos">Productos disponibles:</label>
-            <table id="tablaProductos" class="tabla">
-                <tr>
-                    <!-- <th>Product</th> -->
-                    <th>Title</th>
-                    <th>Category</th>
-                    <th>Tipe content</th>
-                    <th>Watch</th>
-                </tr>
-                <tr *ngFor="let p of productsAvailable">
-                    <!-- <td>{{ p.idProduct }}</td> -->
-                    <td>{{ p.title }}</td>
-                    <td>{{ p.categoria }}</td>
-                    <td>{{ p.tipoContenido }}</td>
-                    <td>
-                        <!-- <button class="btn btn-info" (click)="setIdProduct( p.idProduct )"> -->
-                        <button class="btn btn-info" (click)="addVisual( p.idProduct )">
-                            Go
-                        </button>
-                    </td>
-                </tr>
-            </table>
+    <div *ngIf="activeSubscription" class="container">
+
+        <h3>Productos disponibles</h3>
+
+        <div class="card-columns">
+            <div *ngFor="let p of productsAvailable" class="card">
+                <div class="card-header cardRowBg">{{ p.title }}</div>
+                <div class="card-body cardBg">
+                    <p class="card-text">{{ p.category }} - Category</p>
+                    <p class="card-text">{{ p.contentType }} - Content Type</p>
+                    <button class="btn btn-info btn-block" (click)="addVisual( p.idProduct )">
+                        Watch
+                    </button>
+                </div>
+            </div>
         </div>
+
     </div>
 
-    <div *ngIf="activeUser && activeSuscription" class="container">
-        <button *ngIf="!visualsActivated" class="btn btn-info objCentrado" (click)="showVisuals(); setVisualsOn()">
+
+    <div *ngIf="activeUser && activeSubscription" class="container">
+        <button *ngIf="!visualsActivated" class="btn btn-info mx-auto btn-block"
+            (click)="showVisuals(); setVisualsOn()">
             Show visuals
         </button>
-        <button *ngIf="visualsActivated" class="btn btn-info objCentrado" (click)="setVisualsOff()">
+        <button *ngIf="visualsActivated" class="btn btn-info mx-auto btn-block" (click)="setVisualsOff()">
             Close visuals
         </button>
     </div>
 
+
     <div *ngIf="visualsActivated" class="container">
 
-        <div id="divTablaVisuals" class="form-group divTabla">
-            <label for="tablaVisuals">Historial de visualizaciones:</label>
-            <table id="tablaVisuals" class="tabla">
-                <tr>
-                    <!-- <th>Visual</th> -->
-                    <th>Product</th>
-                    <th>Start</th>
-                    <th>End</th>
-                </tr>
-                <tr *ngFor="let v of customerVisuals">
-                    <!-- <td>{{ v.idVisual }}</td> -->
-                    <td>{{ v.producto.title }}</td>
-                    <td>{{ v.inicio }}</td>
-                    <td>{{ v.fin }}</td>
-                </tr>
-            </table>
+        <h3>Historial de visualizaciones</h3>
+
+        <div class="card-columns">
+            <div *ngFor="let v of customerVisuals" class="card">
+                <div class="card-header cardRowBg">{{ v.product.title }}</div>
+                <div class="card-body cardBg">
+                    <p class="card-text">{{ v.start }} - Start</p>
+                    <p class="card-text">{{ v.end }} - End</p>
+                </div>
+            </div>
         </div>
+
     </div>
-
-    <!-- <div id="divTablaVisuals" class="form-group divTabla">
-        <label for="tablaVisuals">Historial de visualizaciones:</label>
-        <table id="tablaVisuals" class="tabla">
-            <tr>
-                <th>Visual</th>
-                <th>Product</th>
-                <th>Start</th>
-                <th>End</th>
-            </tr>
-            <tr *ngFor="let v of customerVisuals">
-                <td>{{ v.idVisual }}</td>
-                <td>{{ v.producto.title }}</td>
-                <td>{{ v.inicio }}</td>
-                <td>{{ v.fin }}</td>
-            </tr>
-        </table>
-    </div> -->
-
-
 
 
 </div>

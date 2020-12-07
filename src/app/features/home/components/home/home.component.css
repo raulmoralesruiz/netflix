@@ -23,6 +23,15 @@
     display: none;
 }
 
+.cardBg {
+  background-color: rgb(28, 128, 128);
+}
+
+.cardRowBg {
+  background-color: rgb(23, 101, 101);
+}
+
+
 
 /* ----------------------- TABLA ---------------------- */
 

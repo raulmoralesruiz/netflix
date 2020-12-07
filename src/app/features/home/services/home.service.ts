@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { SelectI } from 'src/app/interfaces/select';
 
-import { SuscriptionI } from 'src/app/interfaces/suscription';
+import { SubscriptionI } from 'src/app/interfaces/subscription';
 import { VisualI } from 'src/app/interfaces/visual';
 
 @Injectable({
@@ -20,7 +20,7 @@ export class HomeService {
   };
 
   // Se definen los tipos de suscripciones
-  private suscriptionType: SelectI[] = [
+  private subscriptionType: SelectI[] = [
     {
       id: 1,
       value: 'BASIC',
@@ -33,8 +33,8 @@ export class HomeService {
     },
   ];
 
-  getSuscriptionType(): SelectI[] {
-    return this.suscriptionType;
+  getSubscriptionType(): SelectI[] {
+    return this.subscriptionType;
   }
 
   getIdActiveUserData(): Observable<any> {
@@ -69,11 +69,11 @@ export class HomeService {
 
   createSubscription(
     idCustomer: number,
-    subscription: SuscriptionI
+    subscription: SubscriptionI
   ): Observable<any> {
-    const endpoint = `http://localhost:8080/netflix/suscription/c${idCustomer}`;
+    const endpoint = `http://localhost:8080/netflix/subscription/c${idCustomer}`;
 
-    return this.http.post<SuscriptionI>(
+    return this.http.post<SubscriptionI>(
       endpoint,
       subscription,
       this.httpOptions
@@ -87,7 +87,7 @@ export class HomeService {
   ): Observable<any> {
     const endpoint = `http://localhost:8080/netflix/visual/c${idCustomer}/p${idProduct}`;
 
-    return this.http.post<SuscriptionI>(endpoint, visual, this.httpOptions);
+    return this.http.post<SubscriptionI>(endpoint, visual, this.httpOptions);
   }
 
   getVisuals(idCustomer: number): Observable<any> {

@@ -2,11 +2,11 @@ import { DatePipe } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { CustomerI } from '../../interfaces/customer';
-import { ProductI } from '../../interfaces/product';
+import { CustomerI } from 'src/app/interfaces/customer';
+import { ProductI } from 'src/app/interfaces/product';
 import { HomeService } from '../../services/home.service';
 import { SelectI } from 'src/app/interfaces/select';
-import { SuscriptionI } from 'src/app/interfaces/suscription';
+import { SubscriptionI } from 'src/app/interfaces/subscription';
 import { VisualI } from 'src/app/interfaces/visual';
 
 @Component({
@@ -17,11 +17,12 @@ import { VisualI } from 'src/app/interfaces/visual';
 export class HomeComponent implements OnInit, AfterViewInit {
   activeUser: string;
   customer: CustomerI;
-  activeSuscription: boolean;
+  activeSubscription: boolean;
   productsAvailable: ProductI[];
-  suscriptionTypes: SelectI[];
+  subscriptionTypes: SelectI[];
   customerVisuals: VisualI[];
   visualsActivated: boolean;
+
   todayDate: string;
 
   constructor(
@@ -36,18 +37,18 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   subscriptionForm = new FormGroup({
-    tipoSuscripcion: new FormControl('', Validators.required),
+    subscriptionType: new FormControl('', Validators.required),
   });
 
   ngOnInit(): void {
     // Se guarda el usuario activo en el sistema
-    this.suscriptionTypes = this.homeService.getSuscriptionType();
+    this.subscriptionTypes = this.homeService.getSubscriptionType();
     this.getActiveUser();
   }
 
   getActiveUser(): void {
     this.activeUser = sessionStorage.getItem('activeUser');
-    this.activeSuscription = false;
+    this.activeSubscription = false;
 
     let encontrado = false;
     // let userObject;
@@ -75,11 +76,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
             }
           }
 
-          if (this.customer.suscription != null) {
-            this.activeSuscription = true;
-            // this.activeSuscriptionType = this.customer.suscription.typeOfSuscription;
+          if (this.customer.subscription != null) {
+            this.activeSubscription = true;
 
-            if (this.customer.suscription.typeOfSuscription == 'BASIC') {
+            if (this.customer.subscription.subscriptionType == 'BASIC') {
               this.getAvailableBasicProducts();
             } else {
               this.getAvailablePremiumProducts();
@@ -120,32 +120,37 @@ export class HomeComponent implements OnInit, AfterViewInit {
   activateSubscription(): void {
     console.log(this.customer);
 
-    let suscription: SuscriptionI = {
+    let newSubscription: SubscriptionI = {
       start: '2020-01-01T01:00:00',
       end: '2021-01-01T01:00:00',
-      typeOfSuscription: this.subscriptionForm.value.tipoSuscripcion,
+      subscriptionType: this.subscriptionForm.value.subscriptionType,
       idCustomer: this.customer.id,
     };
+    console.log('newSubscription');
+    console.log(newSubscription);
 
     this.homeService
-      .createSubscription(this.customer.id, suscription)
+      .createSubscription(this.customer.id, newSubscription)
       .subscribe(
         (sub) => {
           alert('subscripción creada!');
+          console.log('sub');
           console.log(sub);
         },
         (error) => {
           console.log(error);
         }
       );
+
+    window.location.reload();
   }
 
   addVisual(idProduct: number): void {
     console.log(this.customer);
 
     let visual: VisualI = {
-      inicio: ' 2020-01-01T01:00:00',
-      fin: '2021-01-01T01:00:00',
+      start: ' 2020-01-01T01:00:00',
+      end: '2021-01-01T01:00:00',
     };
 
     this.homeService
@@ -184,7 +189,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   // EXTRA...
 
   showInfo(): void {
-    console.log(this.subscriptionForm.value.tipoSuscripcion);
+    console.log(this.subscriptionForm.value.subscriptionType);
 
     console.log(Date.now());
 

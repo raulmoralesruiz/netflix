@@ -1,9 +1,9 @@
 export interface ProductI {
   idProduct?: string;
   title: string;
-  categoria: string;
-  tipoContenido: string;
-  tipoSuscripcion: string;
+  category: string;
+  contentType: string;
+  subscriptionType: string;
 }
 
 /* export interface ProductI {

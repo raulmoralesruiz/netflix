@@ -12,6 +12,7 @@ import { AdminComponent } from './features/admin/components/admin/admin.componen
 import { MenuComponent } from './features/menu/components/menu/menu.component';
 import { SignupComponent } from './features/login/components/signup/signup.component';
 import { WelcomeComponent } from './features/welcome/components/welcome/welcome.component';
+import { FooterComponent } from './features/menu/components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { WelcomeComponent } from './features/welcome/components/welcome/welcome.
     MenuComponent,
     SignupComponent,
     WelcomeComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

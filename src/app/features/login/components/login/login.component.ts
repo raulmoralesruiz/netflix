@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['home']);
 
           // Se refresca la página (para mostrar u ocultar botón admin en el menú)
-          window.location.reload();
+          // window.location.reload();
         }
       }
       if (!encontrado) {

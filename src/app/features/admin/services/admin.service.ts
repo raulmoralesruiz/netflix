@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
-import { SelectI } from '../interfaces/select';
-import { ProductI } from '../interfaces/product';
+import { SelectI } from 'src/app/interfaces/select';
+import { ProductI } from 'src/app/interfaces/product';
 
 @Injectable({
   providedIn: 'root',
@@ -15,8 +15,20 @@ export class AdminService {
   }
 
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      /* 'Access-Control-Allow-Origin': '*', */
+    }),
   };
+
+  /* httpDeleteOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE',
+      'Access-Control-Allow-Headers': 'X-Requested-With,Content-Type',
+    }),
+  }; */
 
   // Se definen las categorías
   private category: SelectI[] = [
@@ -86,7 +98,7 @@ export class AdminService {
   }
 
   // Método para obtener los tipos de suscripciones definidos
-  getSuscriptionType(): SelectI[] {
+  getSubscriptionType(): SelectI[] {
     return this.suscriptionType;
   }
 
@@ -132,7 +144,7 @@ export class AdminService {
   }
 
   // Obtener nombres de usuario
-  getSuscriptions(): Observable<any> {
+  getSubscriptions(): Observable<any> {
     const endpoint = 'http://localhost:8080/netflix/suscription';
 
     return this.http.get(endpoint).pipe(
@@ -141,4 +153,22 @@ export class AdminService {
       })
     );
   }
+
+  // Método para eliminar producto, petición DELETE
+  deleteProduct(idProduct: number): Observable<any> {
+    const endpoint = `http://localhost:8080/netflix/products/${idProduct}`;
+
+    return this.http.delete<any>(endpoint, this.httpOptions);
+    // .pipe(catchError(this.handleError('createProduct', product)));
+  }
+
+  /*
+    // Método para crear producto, realizando POST
+  createProduct(product: ProductI): Observable<ProductI> {
+    const endpoint = 'http://localhost:8080/netflix/products/';
+
+    return this.http.post<ProductI>(endpoint, product, this.httpOptions);
+    // .pipe(catchError(this.handleError('createProduct', product)));
+  }
+  */
 }

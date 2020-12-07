@@ -1,4 +1,4 @@
-import { SuscriptionI } from './suscription';
+import { SubscriptionI } from './subscription';
 import { VisualI } from './visual';
 
 export interface CustomerI {
@@ -9,6 +9,6 @@ export interface CustomerI {
   address?: string;
   city?: string;
   dni: string;
-  suscription?: SuscriptionI;
+  subscription?: SubscriptionI;
   visuals?: VisualI;
 }

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { CustomerI } from '../../interfaces/customer';
-import { ProductI } from '../../interfaces/product';
-import { SelectI } from '../../interfaces/select';
-import { SuscriptionI } from '../../interfaces/suscription';
-import { VisualI } from '../../interfaces/visual';
+import { CustomerI } from 'src/app/interfaces/customer';
+import { ProductI } from 'src/app/interfaces/product';
+import { SelectI } from 'src/app/interfaces/select';
+import { SubscriptionI } from 'src/app/interfaces/subscription';
+import { VisualI } from 'src/app/interfaces/visual';
 import { AdminService } from '../../services/admin.service';
 
 @Component({
@@ -19,27 +19,27 @@ export class AdminComponent implements OnInit {
 
   categories: SelectI[];
   contentTypes: SelectI[];
-  suscriptionTypes: SelectI[];
+  subscriptionTypes: SelectI[];
 
   customers: CustomerI[];
   products: ProductI[];
   visuals: VisualI[];
-  suscriptions: SuscriptionI[];
+  subscriptions: SubscriptionI[];
 
   constructor(private adminService: AdminService) {}
 
   productForm = new FormGroup({
     title: new FormControl('', Validators.required),
-    categoria: new FormControl('', Validators.required),
-    tipoContenido: new FormControl('', Validators.required),
-    tipoSuscripcion: new FormControl('', Validators.required),
+    category: new FormControl('', Validators.required),
+    contentType: new FormControl('', Validators.required),
+    subscriptionType: new FormControl('', Validators.required),
   });
 
   ngOnInit(): void {
     /* Se recupera el contenido de los desplegables y se introduce en los arrays/variables correspondientes */
     this.categories = this.adminService.getCategories();
     this.contentTypes = this.adminService.getContentType();
-    this.suscriptionTypes = this.adminService.getSuscriptionType();
+    this.subscriptionTypes = this.adminService.getSubscriptionType();
   }
 
   /* onSelect(id: number): void {
@@ -94,11 +94,11 @@ export class AdminComponent implements OnInit {
     );
   }
 
-  getSuscriptions(): void {
-    this.adminService.getSuscriptions().subscribe(
+  getSubscriptions(): void {
+    this.adminService.getSubscriptions().subscribe(
       (res) => {
-        this.suscriptions = res;
-        this.activeTable = 'suscriptions';
+        this.subscriptions = res;
+        this.activeTable = 'subscriptions';
       },
       (error) => {
         console.log(error);
@@ -116,5 +116,19 @@ export class AdminComponent implements OnInit {
     } else {
       return false;
     }
+  }
+
+  deleteProduct(idProduct: number): void {
+    this.adminService.deleteProduct(idProduct).subscribe(
+      (res) => {
+        console.log(res);
+        alert('Producto eliminado correctamente.');
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
+    this.closeTable();
   }
 }
