@@ -54,6 +54,7 @@ export class AdminComponent implements OnInit {
     this.adminService.createProduct(formData).subscribe((producto) => {
       alert('Producto creado!');
       console.log(producto);
+
       this.productForm.reset();
     });
   }
@@ -118,11 +119,53 @@ export class AdminComponent implements OnInit {
     }
   }
 
+  deleteCustomer(idCustomer: number): void {
+    this.adminService.deleteCustomer(idCustomer).subscribe(
+      (res) => {
+        console.log(res);
+        alert('Cliente eliminado correctamente.');
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
+    this.closeTable();
+  }
+
   deleteProduct(idProduct: number): void {
     this.adminService.deleteProduct(idProduct).subscribe(
       (res) => {
         console.log(res);
         alert('Producto eliminado correctamente.');
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
+    this.closeTable();
+  }
+
+  deleteVisual(idCustomer: number, idVisual: number): void {
+    this.adminService.deleteVisual(idCustomer, idVisual).subscribe(
+      (res) => {
+        console.log(res);
+        alert('Visualización eliminada correctamente.');
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
+    this.closeTable();
+  }
+
+  deleteSubscription(idCustomer: number): void {
+    this.adminService.deleteSubscription(idCustomer).subscribe(
+      (res) => {
+        console.log(res);
+        alert('Subscripción eliminada correctamente.');
       },
       (error) => {
         console.log(error);

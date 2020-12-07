@@ -17,18 +17,8 @@ export class AdminService {
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      /* 'Access-Control-Allow-Origin': '*', */
     }),
   };
-
-  /* httpDeleteOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE',
-      'Access-Control-Allow-Headers': 'X-Requested-With,Content-Type',
-    }),
-  }; */
 
   // Se definen las categorías
   private category: SelectI[] = [
@@ -54,7 +44,7 @@ export class AdminService {
     },
     {
       id: 5,
-      value: 'COMEDIA',
+      value: 'COMEDY',
       name: 'Comedy',
     },
   ];
@@ -74,7 +64,7 @@ export class AdminService {
   ];
 
   // Se definen los tipos de suscripciones
-  private suscriptionType: SelectI[] = [
+  private subscriptionType: SelectI[] = [
     {
       id: 1,
       value: 'BASIC',
@@ -99,7 +89,7 @@ export class AdminService {
 
   // Método para obtener los tipos de suscripciones definidos
   getSubscriptionType(): SelectI[] {
-    return this.suscriptionType;
+    return this.subscriptionType;
   }
 
   // Método para crear producto, realizando POST
@@ -145,7 +135,7 @@ export class AdminService {
 
   // Obtener nombres de usuario
   getSubscriptions(): Observable<any> {
-    const endpoint = 'http://localhost:8080/netflix/suscription';
+    const endpoint = 'http://localhost:8080/netflix/subscription';
 
     return this.http.get(endpoint).pipe(
       map((response) => {
@@ -154,12 +144,32 @@ export class AdminService {
     );
   }
 
+  // Método para eliminar cliente, petición DELETE
+  deleteCustomer(idCustomer: number): Observable<any> {
+    const endpoint = `http://localhost:8080/netflix/customer/${idCustomer}`;
+
+    return this.http.delete<any>(endpoint, this.httpOptions);
+  }
+
   // Método para eliminar producto, petición DELETE
   deleteProduct(idProduct: number): Observable<any> {
     const endpoint = `http://localhost:8080/netflix/products/${idProduct}`;
 
     return this.http.delete<any>(endpoint, this.httpOptions);
-    // .pipe(catchError(this.handleError('createProduct', product)));
+  }
+
+  // Método para eliminar visualización, petición DELETE
+  deleteVisual(idCustomer: number, idVisual: number): Observable<any> {
+    const endpoint = `http://localhost:8080/netflix/visual/c${idCustomer}/v${idVisual}`;
+
+    return this.http.delete<any>(endpoint, this.httpOptions);
+  }
+
+  // Método para eliminar subscripción, petición DELETE
+  deleteSubscription(idCustomer: number): Observable<any> {
+    const endpoint = `http://localhost:8080/netflix/subscription/c${idCustomer}`;
+
+    return this.http.delete<any>(endpoint, this.httpOptions);
   }
 
   /*

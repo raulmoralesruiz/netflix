@@ -191,6 +191,9 @@
                         <p class="card-text">{{ c.dni }}
                             <span class="text-muted"> - DNI</span>
                         </p>
+                        <button class="btn btn-info btn-block" (click)="deleteCustomer( c.id )">
+                            Delete
+                        </button>
                     </div>
                 </div>
             </div>
@@ -234,6 +237,9 @@
                         <p class="card-text">
                             {{ v.product.idProduct }}<span class="text-muted"> - ID Product</span>
                         </p>
+                        <button class="btn btn-info btn-block" (click)="deleteVisual( v.idCustomer, v.idVisual )">
+                            Delete
+                        </button>
                     </div>
                 </div>
             </div>
@@ -259,6 +265,9 @@
                         <p class="card-text">
                             {{ s.idCustomer }}<span class="text-muted"> - ID Customer</span>
                         </p>
+                        <button class="btn btn-info btn-block" (click)="deleteSubscription( s.idCustomer )">
+                            Delete
+                        </button>
                     </div>
                 </div>
             </div>

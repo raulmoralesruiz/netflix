@@ -41,10 +41,10 @@ export class SignupComponent implements OnInit {
     // Se crea producto, utilizando datos del formulario, usando servicio createProduct
     this.loginService.createCustomer(formData).subscribe(
       (customer) => {
-        // sessionStorage.setItem('activeUser', formData.username);
-
         alert('Cliente creado!');
         console.log(customer);
+
+        this.registerForm.reset();
       },
       (error) => {
         console.log(error);
