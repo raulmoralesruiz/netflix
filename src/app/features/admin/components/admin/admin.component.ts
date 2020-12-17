@@ -14,16 +14,32 @@ import { AdminService } from '../../services/admin.service';
   styleUrls: ['./admin.component.css'],
 })
 export class AdminComponent implements OnInit {
+  /* variable que guarda el usuario activo */
   activeUser = sessionStorage.getItem('activeUser');
+  /* variable que guarda la tabla activa */
   activeTable: string;
+  /* variable que guarda la tarjeta activa */
+  activeCard: string;
 
+  /* variable que guarda las categorias (desplegable) */
   categories: SelectI[];
+  /* variable que guarda los tipos de contenido (desplegable) */
   contentTypes: SelectI[];
+  /* variable que guarda los tipos de subscripción (desplegable) */
   subscriptionTypes: SelectI[];
 
+  /* variable que guarda un cliente (utilizado en búsqueda de cliente) */
+  oneCustomer: CustomerI;
+  /* variable utilizada en input de búsqueda de cliente */
+  searchedIdCustomer = '';
+
+  /* variable que guarda un array de clientes */
   customers: CustomerI[];
+  /* variable que guarda un array de productos */
   products: ProductI[];
+  /* variable que guarda un array de visualizaciones */
   visuals: VisualI[];
+  /* variable que guarda un array de subscripciones */
   subscriptions: SubscriptionI[];
 
   constructor(private adminService: AdminService) {}
@@ -42,10 +58,7 @@ export class AdminComponent implements OnInit {
     this.subscriptionTypes = this.adminService.getSubscriptionType();
   }
 
-  /* onSelect(id: number): void {
-    console.log('value_selected:', id);
-  } */
-
+  /* Método utilizado para crear un producto */
   sendData(): void {
     // Se guardan los datos del formulario
     let formData = this.productForm.value;
@@ -55,15 +68,21 @@ export class AdminComponent implements OnInit {
       alert('Producto creado!');
       console.log(producto);
 
+      // se limpia el formulario
       this.productForm.reset();
+
+      // Se cierra cualquier vista (GET), para que el usuario vuelva a pulsar el botón GET
+      this.closeTable();
+      this.closeCard();
     });
   }
 
+  /* Método utilizado para obtener clientes */
   getCustomers(): void {
     this.adminService.getCustomers().subscribe(
       (res) => {
         this.customers = res;
-        this.activeTable = 'customers';
+        this.activeCard = 'customers';
       },
       (error) => {
         console.log(error);
@@ -71,11 +90,29 @@ export class AdminComponent implements OnInit {
     );
   }
 
+  /* Método utilizado para obtener un solo cliente, buscando por id */
+  getOneCustomer(): void {
+    this.adminService
+      .getOneCustomer(parseInt(this.searchedIdCustomer))
+      .subscribe(
+        (res) => {
+          this.oneCustomer = res;
+          this.activeTable = 'oneCustomer';
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+
+    this.closeTable();
+  }
+
+  /* Método utilizado para obtener productos */
   getProducts(): void {
     this.adminService.getProducts().subscribe(
       (res) => {
         this.products = res;
-        this.activeTable = 'products';
+        this.activeCard = 'products';
       },
       (error) => {
         console.log(error);
@@ -83,11 +120,12 @@ export class AdminComponent implements OnInit {
     );
   }
 
+  /* Método utilizado para obtener visualizaciones */
   getVisuals(): void {
     this.adminService.getVisuals().subscribe(
       (res) => {
         this.visuals = res;
-        this.activeTable = 'visuals';
+        this.activeCard = 'visuals';
       },
       (error) => {
         console.log(error);
@@ -95,11 +133,12 @@ export class AdminComponent implements OnInit {
     );
   }
 
+  /* Método utilizado para obtener subscripciones */
   getSubscriptions(): void {
     this.adminService.getSubscriptions().subscribe(
       (res) => {
         this.subscriptions = res;
-        this.activeTable = 'subscriptions';
+        this.activeCard = 'subscriptions';
       },
       (error) => {
         console.log(error);
@@ -107,10 +146,17 @@ export class AdminComponent implements OnInit {
     );
   }
 
+  /* Método utilizado para cerrar la vista de tarjetas */
+  closeCard(): void {
+    this.activeCard = '';
+  }
+
+  /* Método utilizado para cerrar la vista de tablas */
   closeTable(): void {
     this.activeTable = '';
   }
 
+  /* Método que comprueba si el usuario es admin */
   activeUserIsAdmin(): boolean {
     if (this.activeUser == 'admin') {
       return true;
@@ -119,6 +165,7 @@ export class AdminComponent implements OnInit {
     }
   }
 
+  /* Método utilizado para eliminar cliente */
   deleteCustomer(idCustomer: number): void {
     this.adminService.deleteCustomer(idCustomer).subscribe(
       (res) => {
@@ -133,6 +180,7 @@ export class AdminComponent implements OnInit {
     this.closeTable();
   }
 
+  /* Método utilizado para eliminar producto */
   deleteProduct(idProduct: number): void {
     this.adminService.deleteProduct(idProduct).subscribe(
       (res) => {
@@ -147,6 +195,7 @@ export class AdminComponent implements OnInit {
     this.closeTable();
   }
 
+  /* Método utilizado para eliminar visualizacion */
   deleteVisual(idCustomer: number, idVisual: number): void {
     this.adminService.deleteVisual(idCustomer, idVisual).subscribe(
       (res) => {
@@ -161,6 +210,7 @@ export class AdminComponent implements OnInit {
     this.closeTable();
   }
 
+  /* Método utilizado para eliminar subscripcion */
   deleteSubscription(idCustomer: number): void {
     this.adminService.deleteSubscription(idCustomer).subscribe(
       (res) => {

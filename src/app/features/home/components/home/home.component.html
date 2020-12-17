@@ -11,13 +11,13 @@
     </div>
 
 
-    <div *ngIf="activeUser" class="container mt-4 centrado">
+    <div *ngIf="activeUser" id="welcomeDiv" class="container mt-4 centrado">
         <h1>Welcome {{ activeUser }}</h1>
     </div>
 
 
-    <div *ngIf="activeUser == 'admin'" class="container mt-4 centrado">
-        <button class="btn btn-info mt-5 mb-5 btn-lg btn-block" [routerLink]="'/admin'">
+    <div id="adminButtonDiv" *ngIf="activeUser == 'admin'" class="container centrado">
+        <button class="btn btn-info mt-2 mb-2 btn-lg btn-block" [routerLink]="'/admin'">
             Admin site
         </button>
     </div>
@@ -26,7 +26,7 @@
 
     <form [formGroup]="subscriptionForm" action="">
 
-        <div *ngIf="activeUser && !activeSubscription" class="container mt-5">
+        <div *ngIf="activeUser && !activeSubscription" class="container mt-2">
             <div class="form-group">
                 <label for="selectSubscription">Choose a subscription type:</label>
                 <select class="form-control" id="selectSubscription" formControlName="subscriptionType"
@@ -38,7 +38,7 @@
                 </select>
             </div>
 
-            <button class="btn btn-info mt-5 mb-5 btn-block" [disabled]="!subscriptionForm.valid"
+            <button class="btn btn-info mt-2 mb-5 btn-block" [disabled]="!subscriptionForm.valid"
                 (click)="activateSubscription()">
                 Activate Subscription
             </button>

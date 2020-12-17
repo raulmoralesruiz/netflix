@@ -112,6 +112,17 @@ export class AdminService {
   }
 
   // Obtener nombres de usuario
+  getOneCustomer(idCustomer: number): Observable<any> {
+    const endpoint = `http://localhost:8080/netflix/customer/${idCustomer}`;
+
+    return this.http.get(endpoint).pipe(
+      map((response) => {
+        return response;
+      })
+    );
+  }
+
+  // Obtener nombres de usuario
   getProducts(): Observable<any> {
     const endpoint = 'http://localhost:8080/netflix/products/';
 
@@ -171,14 +182,4 @@ export class AdminService {
 
     return this.http.delete<any>(endpoint, this.httpOptions);
   }
-
-  /*
-    // Método para crear producto, realizando POST
-  createProduct(product: ProductI): Observable<ProductI> {
-    const endpoint = 'http://localhost:8080/netflix/products/';
-
-    return this.http.post<ProductI>(endpoint, product, this.httpOptions);
-    // .pipe(catchError(this.handleError('createProduct', product)));
-  }
-  */
 }
